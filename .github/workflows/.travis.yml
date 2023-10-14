@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: make crash1
+      - run: make giftcardwriter.c
       - run: gcc -o giftcardreader giftcardreader.c && ./giftcardreader 1 crash1.gft
       - run: make giftcardwriter_crash2
       - run: gcc -o giftcardreader giftcardreader.c && ./giftcardreader 1 crash2.gft
