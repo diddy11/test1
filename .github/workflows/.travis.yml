@@ -1,0 +1,26 @@
+name: github-actions
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: make giftcardwriter.c
+      - run: gcc -o giftcardreader giftcardreader.c && ./giftcardreader 1 crash1.gft
+      - run: make giftcardwriter_crash2
+      - run: gcc -o giftcardreader giftcardreader.c && ./giftcardreader 1 crash2.gft
+      - run: make giftcardwriter_hang
+      - run: gcc -o giftcardreader giftcardreader.c && ./giftcardreader 1 hang.gft
+      - run: make cov1
+      - run: ./giftcardreader 1 cov1.gft 
+      - run: make cov2
+      - run: ./giftcardreader 1 cov2.gft 
+      - run: gcc -g --coverage giftcardreader.c -o giftcardreader
+      - run: ./giftcardreader 1 crash1.gft
+      - run: ./giftcardreader 1 crash2.gft
+      - run: ./giftcardreader 1 hang.gft
+      - run: ./giftcardreader 1 cov1.gft 
+      - run: ./giftcardreader 1 cov2.gft 
+      - run: ./giftcardreader 1 fuzzer1.gft
+      - run: ./giftcardreader 1 fuzzer2.gft
+      - run: ./giftcardreader 1 fuzzer3.gft
