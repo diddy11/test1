@@ -1,0 +1,21 @@
+//The code in fuzzer2.gft is susceptible to crashes when the length of the merchant_id string in the card structure exceeds the size of the buffer array. To fix this issue, you can modify the code as follows: //
+
+void print_gift_card_info(struct this_gift_card *card) {
+    if (card == NULL || card->gift_card_data == NULL) {
+        printf("Invalid gift card.\n");
+        return;
+    }
+
+    // Ensure the merchant_id is null-terminated
+    char buffer[33];
+    strncpy(buffer, card->gift_card_data->merchant_id, sizeof(buffer) - 1);
+    buffer[sizeof(buffer) - 1] = '\0';
+
+    printf("Merchant ID: %s\n", buffer);
+    // Other printing logic...
+}
+
+// In the updated code, the buffer array has been increased to 33 characters to accommodate the null terminator. Additionally, a check has been added to validate the input card and its gift_card_data member to avoid dereferencing null pointers.
+
+By making these changes, the code should be more robust and less prone to crashes caused by buffer overflows. 
+//

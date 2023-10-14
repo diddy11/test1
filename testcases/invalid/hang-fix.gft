@@ -1,0 +1,17 @@
+//To fix the infinite loop issue, you need to introduce a proper termination condition within the loop body. For instance, you can modify the loop to terminate when a specific condition is met. Here's an example fix:
+//
+
+void animate(char *msg, unsigned char *program) {
+    // ...
+    int terminate = 0;
+    while (!terminate) {
+        // ...
+        case 0x08:
+            terminate = 1;  // Set terminate condition to exit the loop
+            break;
+        // ...
+    }
+    // ...
+}
+//In this fixed version, the loop will continue running until the terminate variable is set to 1 within the case statement 0x08. Once the termination condition is met, the loop will exit, preventing an infinite loop scenario.
+//

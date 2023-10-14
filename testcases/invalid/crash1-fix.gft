@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct gift_card_data {
+    // Structure members...
+};
+
+int main() {
+    struct gift_card_data* gcd_ptr = malloc(sizeof(struct gift_card_data));
+
+    if (gcd_ptr == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+
+    // Perform operations with gcd_ptr...
+
+    free(gcd_ptr);  // Free the allocated memory
+    gcd_ptr = NULL; // Set the pointer to NULL
+
+    // Now gcd_ptr is a null pointer
+    if (gcd_ptr == NULL) {
+        printf("Pointer is null.\n");
+    }
+
+    return 0;
+}

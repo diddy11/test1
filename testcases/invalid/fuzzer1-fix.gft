@@ -1,0 +1,75 @@
+struct this_gift_card *create_gift_card(char *input) {
+    struct this_gift_card *card = malloc(sizeof(struct this_gift_card));
+    if (card == NULL) {
+        return NULL;
+    }
+
+    card->gift_card_data = malloc(sizeof(struct gift_card_data));
+    if (card->gift_card_data == NULL) {
+        free(card);
+        return NULL;
+    }
+
+    // Initialize the gift_card_data struct
+    card->gift_card_data->merchant_id = malloc(33 * sizeof(char));
+    if (card->gift_card_data->merchant_id == NULL) {
+        free(card->gift_card_data);
+        free(card);
+        return NULL;
+    }
+    strncpy(card->gift_card_data->merchant_id, "default_merchant", 32);
+    card->gift_card_data->merchant_id[32] = '\0';
+
+    // Initialize other members of the gift card
+
+    return card;
+}
+===============================================================================
+
+//To fix the crash by implementing bounds checking and proper memory allocation in the gift_card_reader function:
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void gift_card_reader(FILE *input_file) {
+    // Determine the size of the input file
+    fseek(input_file, 0, SEEK_END);
+    long input_size = ftell(input_file);
+    fseek(input_file, 0, SEEK_SET);
+
+    // Allocate memory for the input data
+    char *input_data = (char *)malloc(input_size);
+    if (input_data == NULL) {
+        printf("Failed to allocate memory for input data.\n");
+        return;
+    }
+
+    // Read the input file into the allocated memory
+    size_t bytes_read = fread(input_data, 1, input_size, input_file);
+    if (bytes_read != input_size) {
+        printf("Failed to read input file.\n");
+        free(input_data);
+        return;
+    }
+
+    // Process the input data here without causing crashes
+
+    // Cleanup: free the allocated memory
+    free(input_data);
+}
+
+int main() {
+    FILE *input_file = fopen("fuzz_input.bin", "rb");
+    if (!input_file) {
+        printf("Failed to open input file.\n");
+        return 1;
+    }
+
+    gift_card_reader(input_file);
+
+    fclose(input_file);
+
+    return 0;
+}
+//

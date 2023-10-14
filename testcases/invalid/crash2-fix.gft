@@ -1,0 +1,22 @@
+void animate(char *msg, unsigned char *program) {
+    unsigned char regs[16];
+    // ...
+    while (1) {
+        // ...
+        switch (*pc) {
+            // ...
+            case 0x04:
+                if (arg2 < 16) {
+                    regs[arg2] = arg1;
+                } else {
+                    // Handle the out-of-bounds case gracefully
+                    // For example, you can print an error message or take appropriate action
+                    printf("Error: Register index out of bounds\n");
+                }
+                break;
+            // ...
+        }
+        // ...
+    }
+    // ...
+}
